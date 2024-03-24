@@ -1,31 +1,30 @@
 import { useState } from "react";
-import { User, addUser } from "../../../Service/userService";
+import { User, addUser, updateUser } from "../../../Service/userService";
 import './UserForm.css';
+import { NotificationProps, notification } from "../../notify/Notification";
 
 interface UserFormProps {
-    user: User
-    onSubmit: (user: User) => void
+    user: User,
 }
-export const UserForm = ({ user, onSubmit }: UserFormProps) => {
+export const UserForm = ({ user }: UserFormProps) => {
     const [formData, setFormData] = useState<User>(user);
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        // if (user.employeeId || user.employeeId !== '') {
-        //   await updateEmployee(user.employeeId, user.createDate, user as Employee);
-        //   alert('Employee updated successfully')
-        // } else {
-        formData.contactList = [];
-        await addUser(formData);
-        alert('Employee added  successfully')
-        // }
-        setFormData({ userId: '', name: '', email: '', password: '', createDate: new Date(), organization: null } as User);
-        onSubmit(formData);
+        if (formData.userId === '') {
+            formData.contactList = [];
+            await addUser(formData);
+            notification({ message: 'Employee added  successfully', type: 'success' } as NotificationProps)
+        } else {
+            await updateUser(formData.userId, formData.createDate, formData);
+            notification({ message: 'Employee update  successfully', type: 'success' } as NotificationProps)
+        }
+        
     }
     const handleFormChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
     return (
-        <>
+        <div className="user">
             <h2>{formData.userId === '' ? 'Add' : 'Update'} User</h2>
             <form onSubmit={handleSubmit}>
                 <input type="hidden" name="id" value={formData.userId} />
@@ -43,7 +42,7 @@ export const UserForm = ({ user, onSubmit }: UserFormProps) => {
                 </div>
                 <button type="submit">{formData.userId === '' ? 'Add' : 'Update'}</button>
             </form>
-        </>
+        </div>
     );
 }
 export default UserForm;

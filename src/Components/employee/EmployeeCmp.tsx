@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react';
 import './Employee.css';
 import { Employee, addEmployee, deleteEmployee, filterEmployeeByDateRange, filterEmployeeByName, getAllEmployees, updateEmployee } from '../../Service/employeeService';
 import { TableCellDateTime } from '../../Utility/common';
+import { NotificationProps, notification } from '../notify/Notification';
 
-export const EmployeeCmp=()=> {
+export const EmployeeCmp = () => {
   const [employeeList, setEmployee] = useState<Employee[]>([]);
   const [formData, setFormData] = useState<Employee>({ employeeId: '', name: '', phoneNo: '', age: 0, createDate: new Date() } as Employee);
   const [name, setName] = useState<string>()
@@ -27,10 +28,10 @@ export const EmployeeCmp=()=> {
     e.preventDefault();
     if (formData.employeeId || formData.employeeId !== '') {
       await updateEmployee(formData.employeeId, formData.createDate, formData as Employee);
-      alert('Employee updated successfully')
+      notification({ message: 'Employee updated successfully', type: 'success' } as NotificationProps)
     } else {
       await addEmployee(formData);
-      alert('Employee added  successfully')
+      notification({ message: 'Employee added successfully', type: 'success' } as NotificationProps)
     }
     setFormData({ employeeId: '', name: '', phoneNo: '', age: 0, createDate: new Date() } as Employee);
     getEmployees();
@@ -51,7 +52,7 @@ export const EmployeeCmp=()=> {
 
   const handleDelete = async (employeeId: string, createDate: Date) => {
     await deleteEmployee(employeeId, createDate);
-    alert('Employee deleted successfully')
+    notification({ message: 'Employee deleted successfully', type: 'delete' } as NotificationProps)
     getEmployees();
   };
   const onSearch = async () => {
@@ -64,16 +65,6 @@ export const EmployeeCmp=()=> {
     setName('');
     getEmployees();
   }
-  // const handleFromDateChange = (e: any) => {
-  //   if (e.target.value) {
-  //     setFromDate(new Date(e.target.value).toISOString())
-  //   }
-  // }
-  // const handleToDateChange = (e: any) => {
-  //   if (e.target.value) {
-  //     setToDate(new Date(e.target.value).toISOString())
-  //   }
-  // }
   const onDateRangeSearch = async () => {
     if (fromDate && toDate) {
       const employees = await filterEmployeeByDateRange(fromDate, toDate);

@@ -20,6 +20,7 @@ export type UserContact = {
 export type UserOrganization = {
   orgId: string
   orgName: string,
+  orgAddress:string
   createDate: Date
 }
 
@@ -27,7 +28,10 @@ export const getAllUser = async () => {
   const response = await axios.get(`${API_URL}/getAllUser`);
   return response.data;
 };
-
+export const getUserById = async (userId: string, createDate: any) => {
+  const response = await axios.get(`${API_URL}/getById/${userId}/date/${createDate}`);
+  return response.data;
+};
 export const addUser = async (user: User) => {
   const response = await axios.post(`${API_URL}/addUser/`, user);
   return response.data;
@@ -35,5 +39,19 @@ export const addUser = async (user: User) => {
 
 export const updateUser = async (userId: string, createDate: Date, user: User) => {
   const response = await axios.put(`${API_URL}/updateUser/${userId}/${createDate}`, user);
+  return response.data;
+};
+
+export const deleteUser = async (userId: string, createDate: Date,) => {
+  const response = await axios.delete(`${API_URL}/deleteUser/${userId}/${createDate}`);
+  return response.data;
+};
+
+export const filterUserByName = async (name: string) => {
+  const response = await axios.get(`${API_URL}/getUserListByName/${name}`);
+  return response.data;
+};
+export const filterUserByDateRange = async (fromDate: string, toDate: string) => {
+  const response = await axios.get(`${API_URL}/getUserListByDateRange/?start_date=${fromDate}&end_date=${toDate}`);
   return response.data;
 };
