@@ -1,0 +1,36 @@
+form {
+    border: 1px solid #ccc;
+    padding: 20px;
+    width: 90%;
+}
+
+form div {
+    margin-bottom: 10px;
+}
+
+form label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+form input[type='text'],
+form input[type='email'],
+form input[type='password']
+form input[type='number'] {
+    width: calc(100% - 12px);
+    padding: 6px;
+    border: 1px solid #ccc;
+}
+
+form button {
+    margin-top: 10px;
+    padding: 6px 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+form button:hover {
+    background-color: #0056b3;
+}

@@ -1,7 +1,6 @@
 
 import axios from 'axios';
-
-export const API_URL = 'http://127.0.0.1:8000';
+import { API_URL } from '../Utility/common';
 
 export const getAllEmployees = async () => {
   const response = await axios.get(`${API_URL}/getAllEmployees`);
