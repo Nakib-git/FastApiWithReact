@@ -10,8 +10,7 @@ export const UserEdit = () => {
   const [searchParams] = useSearchParams();
   const userId = searchParams.get('userId');
   const createDate = searchParams.get('createDate');
-  // const { userId } = useParams();
-  // if (!userId) return ('User id not found.')
+
   const [formData, setFormData] = useState<User | null>(null);
   const getUser = async () => {
     if (userId && createDate) {

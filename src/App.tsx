@@ -7,8 +7,7 @@ function App() {
 
   return (
     <div>
-       <ToastContainer />
-      <Nav />
+      <ToastContainer />
       <Router />
     </div>
   );

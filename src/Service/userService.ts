@@ -23,6 +23,16 @@ export type UserOrganization = {
   orgAddress:string
   createDate: Date
 }
+export type EmailVerfication = {
+  verficationCode: string
+  email: string
+}
+export type Login = {
+  id:string
+  email: string
+  password: string,
+}
+
 
 export const getAllUser = async () => {
   const response = await axios.get(`${API_URL}/getAllUser`);
@@ -53,5 +63,19 @@ export const filterUserByName = async (name: string) => {
 };
 export const filterUserByDateRange = async (fromDate: string, toDate: string) => {
   const response = await axios.get(`${API_URL}/getUserListByDateRange/?start_date=${fromDate}&end_date=${toDate}`);
+  return response.data;
+};
+
+//auth
+export const signUpUser = async (user: User) => {
+  const response = await axios.post(`${API_URL}/signup`, user);
+  return response.data;
+};
+export const verificationEmail = async (data: EmailVerfication) => {
+  const response = await axios.post(`${API_URL}/verification`, data);
+  return response.data;
+};
+export const loginUser = async (data: Login) => {
+  const response = await axios.post(`${API_URL}/login`, data);
   return response.data;
 };

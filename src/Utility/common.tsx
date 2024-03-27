@@ -25,3 +25,19 @@ export const TableCellDateTime = (prop: TableCellDateTimeProps) => {
 //     return newItem;
 //   });
 // };
+
+export const decodeToken = (token: string): any | null => {
+  const base64Url = token.split('.')[1];
+  if (!base64Url) {
+    console.error('Invalid token format');
+    return null;
+  }
+  try {
+    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    const decodedToken = JSON.parse(atob(base64));
+    return decodedToken;
+  } catch (error) {
+    console.error('Error decoding token:', error);
+    return null;
+  }
+}

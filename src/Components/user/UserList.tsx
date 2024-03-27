@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
 import './User.css';
-import { User, getAllUser, UserOrganization, deleteUser, filterUserByName, filterUserByDateRange } from "../../Service/userService";
+import { User, getAllUser, deleteUser, filterUserByName, filterUserByDateRange } from "../../Service/userService";
 import { TableCellDateTime } from "../../Utility/common";
 import { useNavigate } from "react-router-dom";
 import { NotificationProps, notification } from "../notify/Notification";
-import { getUnpackedSettings } from "http2";
 
 export const UserList = () => {
     const [name, setName] = useState<string>()
@@ -83,7 +82,7 @@ export const UserList = () => {
                         <tr>
                             <th>Name</th>
                             <th>Email</th>
-                            {/* <th>Password</th> */}
+                            <th>Password</th>
                             <th>Created Date</th>
                             <th></th>
                         </tr>
@@ -93,7 +92,7 @@ export const UserList = () => {
                             <tr key={user.userId}>
                                 <td>{user.name}</td>
                                 <td>{user.email}</td>
-                                {/* <td>{user.password}</td> */}
+                                <td>{user.password}</td>
                                 <TableCellDateTime datetime={user.createDate} />
                                 <td>
                                     <button className='edit-button' type='submit' onClick={() => handleEdit(user.userId, user.createDate)}>Edit</button>
